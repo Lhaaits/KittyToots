@@ -86,11 +86,6 @@ namespace Code.Scripts
             IsGameOver = false;
         }
 
-        public void OnClick(InputAction.CallbackContext ctx)
-        {
-            Debug.Log("test");
-        }
-
         public void GameOver()
         {
             if (IsGameOver) return; // If already game over, don't do this again

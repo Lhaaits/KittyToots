@@ -35,15 +35,6 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
-                },
-                {
-                    ""name"": ""Retry"",
-                    ""type"": ""Button"",
-                    ""id"": ""4548ba80-d607-4653-9950-9c26aa26c53d"",
-                    ""expectedControlType"": ""Button"",
-                    ""processors"": """",
-                    ""interactions"": """",
-                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -99,28 +90,6 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""groups"": ""Keyboard&Mouse"",
                     ""action"": ""Fart"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""3fdef39f-6338-4478-90f2-418059bfad66"",
-                    ""path"": """",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""Retry"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""e8323cae-391a-4e25-be9c-a1a2b5ca2664"",
-                    ""path"": ""<Keyboard>/g"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": ""Keyboard&Mouse"",
-                    ""action"": ""Retry"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -510,17 +479,6 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": """",
-                    ""id"": ""99e4737e-a72d-4799-8af6-1d38307271db"",
-                    ""path"": ""<Keyboard>/r"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""Submit"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
                     ""id"": ""82627dcc-3b13-4ba9-841d-e4b746d6553e"",
                     ""path"": ""*/{Cancel}"",
                     ""interactions"": """",
@@ -603,17 +561,6 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""XR"",
-                    ""action"": ""Click"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""e64f73f8-0f85-4cd5-84fd-9c456665fc0e"",
-                    ""path"": ""<Keyboard>/n"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": ""Keyboard&Mouse"",
                     ""action"": ""Click"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
@@ -742,7 +689,6 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
         // Player
         m_Player = asset.FindActionMap("Player", throwIfNotFound: true);
         m_Player_Fart = m_Player.FindAction("Fart", throwIfNotFound: true);
-        m_Player_Retry = m_Player.FindAction("Retry", throwIfNotFound: true);
         // UI
         m_UI = asset.FindActionMap("UI", throwIfNotFound: true);
         m_UI_Navigate = m_UI.FindAction("Navigate", throwIfNotFound: true);
@@ -817,13 +763,11 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
     private readonly InputActionMap m_Player;
     private List<IPlayerActions> m_PlayerActionsCallbackInterfaces = new List<IPlayerActions>();
     private readonly InputAction m_Player_Fart;
-    private readonly InputAction m_Player_Retry;
     public struct PlayerActions
     {
         private @PlayerInput m_Wrapper;
         public PlayerActions(@PlayerInput wrapper) { m_Wrapper = wrapper; }
         public InputAction @Fart => m_Wrapper.m_Player_Fart;
-        public InputAction @Retry => m_Wrapper.m_Player_Retry;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -836,9 +780,6 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
             @Fart.started += instance.OnFart;
             @Fart.performed += instance.OnFart;
             @Fart.canceled += instance.OnFart;
-            @Retry.started += instance.OnRetry;
-            @Retry.performed += instance.OnRetry;
-            @Retry.canceled += instance.OnRetry;
         }
 
         private void UnregisterCallbacks(IPlayerActions instance)
@@ -846,9 +787,6 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
             @Fart.started -= instance.OnFart;
             @Fart.performed -= instance.OnFart;
             @Fart.canceled -= instance.OnFart;
-            @Retry.started -= instance.OnRetry;
-            @Retry.performed -= instance.OnRetry;
-            @Retry.canceled -= instance.OnRetry;
         }
 
         public void RemoveCallbacks(IPlayerActions instance)
@@ -1032,7 +970,6 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
     public interface IPlayerActions
     {
         void OnFart(InputAction.CallbackContext context);
-        void OnRetry(InputAction.CallbackContext context);
     }
     public interface IUIActions
     {
