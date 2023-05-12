@@ -1,26 +1,22 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using Code.Scripts;
 using UnityEngine;
 
 public class FartMover : MonoBehaviour
 {
-    private PostMover PostMover;
+    private LogicScript _logicScript;
     // Start is called before the first frame update
-    private float _moveSpeed;
+
 
     private void Awake()
     {
-        PostMover = GameObject.FindGameObjectWithTag("Post").GetComponent<PostMover>();
-        _moveSpeed = PostMover.moveSpeed;
+        _logicScript = GameObject.FindGameObjectWithTag("Logic").GetComponent<LogicScript>();
     }
 
     private void Update()
     {
-        var transformPosition = Vector3.left * _moveSpeed * Time.deltaTime;
+        var transformPosition = Vector3.left * _logicScript.moveSpeed * Time.deltaTime;
         transform.position += transformPosition;
-        if (transform.position.x < PostMover.despawnPosX)
+        if (transform.position.x < _logicScript.despawnPosX)
         {
             Destroy(gameObject);
         }

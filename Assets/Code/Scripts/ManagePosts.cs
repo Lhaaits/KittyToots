@@ -7,10 +7,17 @@ namespace Code.Scripts
     {
         public GameObject posts;
     
-        public float spawnInterval = 2;
         private float _timer;
-        public float heightOffset = 10;
-    
+        private float _lastYPosition = 0;
+        private float _maxHeightOffset = 9.5f;
+
+        private LogicScript _logicScript;
+
+        private void Awake()
+        {
+            _logicScript = GameObject.FindGameObjectWithTag("Logic").GetComponent<LogicScript>();
+        }
+        
         // Start is called before the first frame update
         private void Start()
         {
@@ -20,7 +27,7 @@ namespace Code.Scripts
         // Update is called once per frame
         private void Update()
         {
-            if (_timer < spawnInterval)
+            if (_timer < _logicScript.spawnInterval)
             {
                 _timer += Time.deltaTime;
             }
@@ -33,11 +40,16 @@ namespace Code.Scripts
 
         private void SpawnPosts()
         {
-            var transform1 = transform;
-            var position = transform1.position;
-            var lowestPoint = position.y - heightOffset;
-            var highestPoint = position.y + heightOffset;
-            Instantiate(posts, new Vector3(position.x, Random.Range(lowestPoint, highestPoint),0), transform1.rotation);
+            var position = transform.position;
+            var lowestPoint = position.y - _maxHeightOffset;
+            var highestPoint = position.y + _maxHeightOffset;
+            var maxUp = Mathf.Min(highestPoint - _lastYPosition, _logicScript.maxHeightChange);
+            var maxDown = Mathf.Max(lowestPoint - _lastYPosition, -_logicScript.maxHeightChange);
+            
+            // TODO if plus , then more minus, and vice versa
+            var newYPosition = _lastYPosition + Random.Range(maxDown, maxUp);
+            Instantiate(posts, new Vector3(position.x, newYPosition,0), transform.rotation);
+            _lastYPosition = newYPosition;
         }
     }
 }

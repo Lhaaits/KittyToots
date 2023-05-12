@@ -15,6 +15,13 @@ namespace Code.Scripts
         public TMP_Text newHighScoreText;
         public TMP_Text startText;
         public GameObject gameOverScreen;
+        public float slowMotionFactor = 0.1f;
+        public float moveSpeed = 15;
+        public float spawnInterval = 3;
+        public float maxHeightChange = 9.5f;
+        
+        [HideInInspector] public float despawnPosX;
+        private Camera _camera;
 
         public bool IsGameOver { get; set; }
 
@@ -32,6 +39,14 @@ namespace Code.Scripts
             _fartAction.Enable();
         }
 
+        private void Awake()
+        {
+            _camera = Camera.main;
+            if (_camera == null) return;
+            var screenToWorldPoint = _camera.ScreenToWorldPoint(new Vector3(0,0,_camera.nearClipPlane));
+            despawnPosX = screenToWorldPoint.x - 20;
+        }
+
         private void Start()
         {
             var currentHighScore = PlayerPrefs.GetInt(Constants.HighScore.ToString());
@@ -45,6 +60,7 @@ namespace Code.Scripts
             _instructionText = startText.text;
             startText.text = "";
             Time.timeScale = 1;
+            _fartAction.Enable();
         }
 
         private void Update()
@@ -71,12 +87,17 @@ namespace Code.Scripts
                 Time.timeScale = 1;
             }
         }
-        // TODO increase difficulty over time
 
         public void IncreaseScore()
         {
             score++;
             scoreText.text = score.ToString();
+            if (score % 5 == 0)
+            {
+                moveSpeed *= 1.1f;
+                spawnInterval *= 0.90909090909f; // 1/1.1
+                maxHeightChange *= 0.90909090909f;
+            }
         }
 
         public void Restart()
@@ -93,7 +114,9 @@ namespace Code.Scripts
             UpdateHighScore();
             Debug.Log("slow down time");
             gameOverScreen.SetActive(true);
-            Time.timeScale = 0.2f;
+            Time.timeScale = slowMotionFactor;
+            inputAsset.FindActionMap("UI").Enable();
+            _fartAction.Disable();
         }
         // TODO exit game menu
 

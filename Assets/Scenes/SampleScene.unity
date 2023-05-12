@@ -262,7 +262,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -379, y: 400}
+  m_AnchoredPosition: {x: -379, y: 455}
   m_SizeDelta: {x: 200, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &172638895
@@ -639,7 +639,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Press Space to fart
+  m_text: Press Spacebar to fart
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -746,7 +746,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 76c392e42b5098c458856cdf6ecaaaa1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_FirstSelected: {fileID: 0}
+  m_FirstSelected: {fileID: 1347976958}
   m_sendNavigationEvents: 1
   m_DragThreshold: 10
 --- !u!4 &824145225
@@ -780,17 +780,17 @@ MonoBehaviour:
   m_MoveRepeatDelay: 0.5
   m_MoveRepeatRate: 0.1
   m_XRTrackingOrigin: {fileID: 0}
-  m_ActionsAsset: {fileID: -944628639613478452, guid: ca9f5fa95ffab41fb9a615ab714db018, type: 3}
-  m_PointAction: {fileID: -1654692200621890270, guid: ca9f5fa95ffab41fb9a615ab714db018, type: 3}
-  m_MoveAction: {fileID: -8784545083839296357, guid: ca9f5fa95ffab41fb9a615ab714db018, type: 3}
-  m_SubmitAction: {fileID: 392368643174621059, guid: ca9f5fa95ffab41fb9a615ab714db018, type: 3}
-  m_CancelAction: {fileID: 7727032971491509709, guid: ca9f5fa95ffab41fb9a615ab714db018, type: 3}
-  m_LeftClickAction: {fileID: 3001919216989983466, guid: ca9f5fa95ffab41fb9a615ab714db018, type: 3}
-  m_MiddleClickAction: {fileID: -2185481485913320682, guid: ca9f5fa95ffab41fb9a615ab714db018, type: 3}
-  m_RightClickAction: {fileID: -4090225696740746782, guid: ca9f5fa95ffab41fb9a615ab714db018, type: 3}
-  m_ScrollWheelAction: {fileID: 6240969308177333660, guid: ca9f5fa95ffab41fb9a615ab714db018, type: 3}
-  m_TrackedDevicePositionAction: {fileID: 6564999863303420839, guid: ca9f5fa95ffab41fb9a615ab714db018, type: 3}
-  m_TrackedDeviceOrientationAction: {fileID: 7970375526676320489, guid: ca9f5fa95ffab41fb9a615ab714db018, type: 3}
+  m_ActionsAsset: {fileID: -944628639613478452, guid: ba30843b53bd14354b523316c9591732, type: 3}
+  m_PointAction: {fileID: -2162883856855712397, guid: ba30843b53bd14354b523316c9591732, type: 3}
+  m_MoveAction: {fileID: 6228951619278763800, guid: ba30843b53bd14354b523316c9591732, type: 3}
+  m_SubmitAction: {fileID: -7893682099277272685, guid: ba30843b53bd14354b523316c9591732, type: 3}
+  m_CancelAction: {fileID: 8933866034070291446, guid: ba30843b53bd14354b523316c9591732, type: 3}
+  m_LeftClickAction: {fileID: 7746479263486600463, guid: ba30843b53bd14354b523316c9591732, type: 3}
+  m_MiddleClickAction: {fileID: -2110030057419782983, guid: ba30843b53bd14354b523316c9591732, type: 3}
+  m_RightClickAction: {fileID: -4945128912357355467, guid: ba30843b53bd14354b523316c9591732, type: 3}
+  m_ScrollWheelAction: {fileID: -6334691848726916019, guid: ba30843b53bd14354b523316c9591732, type: 3}
+  m_TrackedDevicePositionAction: {fileID: -8463986064867389679, guid: ba30843b53bd14354b523316c9591732, type: 3}
+  m_TrackedDeviceOrientationAction: {fileID: -5461620560187442090, guid: ba30843b53bd14354b523316c9591732, type: 3}
   m_DeselectOnBackgroundClick: 1
   m_PointerBehavior: 0
   m_CursorLockBehavior: 0
@@ -1471,8 +1471,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   posts: {fileID: 4211812437138399379, guid: 2868e3d25d40b4d24979c7dd7059a79c, type: 3}
-  spawnInterval: 2
-  heightOffset: 10
 --- !u!4 &1298382773
 Transform:
   m_ObjectHideFlags: 0
@@ -1828,6 +1826,11 @@ MonoBehaviour:
   newHighScoreText: {fileID: 680235299}
   startText: {fileID: 789797679}
   gameOverScreen: {fileID: 1206729695}
+  slowMotionFactor: 0.1
+  moveSpeed: 15
+  spawnInterval: 2
+  maxHeightChange: 15
+  despawnPosX: 0
   inputAsset: {fileID: -944628639613478452, guid: ba30843b53bd14354b523316c9591732, type: 3}
 --- !u!4 &1453714491
 Transform:
@@ -2390,7 +2393,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 654, y: 430}
+  m_AnchoredPosition: {x: 654, y: 464}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1001 &2032490378
