@@ -19,6 +19,7 @@ namespace Code.Scripts
         public float moveSpeed = 15;
         public float spawnInterval = 3;
         public float maxHeightChange = 9.5f;
+        public float difficultyIncreaseFactor = 1.02f;
         
         [HideInInspector] public float despawnPosX;
         private Camera _camera;
@@ -94,9 +95,9 @@ namespace Code.Scripts
             scoreText.text = score.ToString();
             if (score % 5 == 0)
             {
-                moveSpeed *= 1.1f;
-                spawnInterval *= 0.90909090909f; // 1/1.1
-                maxHeightChange *= 0.90909090909f;
+                moveSpeed *= difficultyIncreaseFactor;
+                spawnInterval /=  difficultyIncreaseFactor;
+                maxHeightChange /= difficultyIncreaseFactor;
             }
         }
 

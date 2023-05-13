@@ -133,12 +133,16 @@ namespace Code.Scripts
                     leftBalloon.transform.GetChild(0).rotation = Quaternion.Euler(0f, 0f, 12f);
                     var rightBalloon = GameObject.FindGameObjectWithTag(_balloonTags[1]);
                     rightBalloon.transform.GetChild(0).rotation = Quaternion.Euler(0f, 0f, -12f);
+                    rigidbody.gravityScale = 5;
+                    upFactor = 20;
                     break;
                 }
                 case 1:
                 {
                     var middleBalloon = GameObject.FindGameObjectWithTag(_balloonTags[0]);
                     middleBalloon.transform.GetChild(0).rotation = Quaternion.Euler(0f, 0f, 0f);
+                    rigidbody.gravityScale = 7;
+                    upFactor = 23;
                     break;
                 }
             }
