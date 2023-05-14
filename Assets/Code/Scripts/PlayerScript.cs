@@ -1,13 +1,13 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.InputSystem.EnhancedTouch;
 using Random = UnityEngine.Random;
 
 namespace Code.Scripts
 {
-    public class PusheenScript : MonoBehaviour
+    public class PlayerScript : MonoBehaviour
     {
         /** TODO background parallax
      * start screen
@@ -19,13 +19,9 @@ namespace Code.Scripts
          * 
     */
         public new Rigidbody2D rigidbody;
-
         public AudioSource fartSound;
-
         public AudioSource meowSound;
-
         public AudioSource popSound;
-
         public AudioClip[] meows;
 
         [Tooltip("How much up do you want?")] public float upFactor = 10;
@@ -35,20 +31,22 @@ namespace Code.Scripts
         private List<string> _balloonTags = new();
 
         public InputActionAsset inputAsset;
+        // private InputActionMap _inputActionMap;
+        // private InputAction _fartAction;
 
-        private InputActionMap _inputActionMap;
-        private InputAction _fartAction;
 
         private void OnEnable()
         {
-            _inputActionMap = inputAsset.FindActionMap("Player");
-            _fartAction = _inputActionMap.FindAction("Fart");
-            _fartAction.Enable();
+            // _inputActionMap = inputAsset.FindActionMap("Player");
+            // _fartAction = _inputActionMap.FindAction("Fart");
+            // _fartAction.Enable();
+            EnhancedTouchSupport.Enable();
         }
-        
-             private void OnDisable()
+
+        private void OnDisable()
         {
-            _fartAction.Disable();
+            EnhancedTouchSupport.Disable();
+            // _fartAction.Disable();
         }
 
         // Start is called before the first frame update
@@ -60,10 +58,19 @@ namespace Code.Scripts
             _balloonTags.AddRange(new List<string> { "Left", "Middle", "Right" });
         }
 
-        private void Update()
+        // private void Update()
+        // {
+        //     if (_logicScript.IsGameOver || _logicScript.IsPaused) return;
+        //     if (!_fartAction.triggered && Touch.activeTouches.Count <= 0) return;
+        //     Debug.Log("fartaction triggered");
+        //     rigidbody.velocity = Vector2.up * upFactor;
+        //     fartSound.pitch = Random.Range(0.5f, 2f);
+        //     fartSound.PlayOneShot(fartSound.clip);
+        // }
+
+        public void HandleFart()
         {
             if (_logicScript.IsGameOver || _logicScript.IsPaused) return;
-            if (!_fartAction.triggered) return;
             Debug.Log("fartaction triggered");
             rigidbody.velocity = Vector2.up * upFactor;
             fartSound.pitch = Random.Range(0.5f, 2f);

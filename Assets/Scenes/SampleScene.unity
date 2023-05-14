@@ -1998,7 +1998,7 @@ GameObject:
   - component: {fileID: 1807707972}
   - component: {fileID: 1807707971}
   m_Layer: 0
-  m_Name: Pusheen
+  m_Name: Player
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2515,6 +2515,54 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 1082519061767400462, guid: 73d5d51c4d9db4d9886bb9a1037606a8, type: 3}
   m_PrefabInstance: {fileID: 2032490378}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &2068015298
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2068015299}
+  - component: {fileID: 2068015300}
+  m_Layer: 0
+  m_Name: FartController
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2068015299
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2068015298}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -0.39999938, y: 20, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 8
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2068015300
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2068015298}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 308e16d7cafe4a0da3ef2fd8a51f2b0f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  inputAsset: {fileID: -944628639613478452, guid: ba30843b53bd14354b523316c9591732, type: 3}
+  logicManager: {fileID: 1453714489}
+  spawnFart: {fileID: 1079905817}
+  player: {fileID: 1807707962}
 --- !u!1001 &571918351053052590
 PrefabInstance:
   m_ObjectHideFlags: 0

@@ -92,17 +92,6 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
                     ""action"": ""Fart"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""09c7a51b-a808-454f-a68b-b84b1a156a3c"",
-                    ""path"": ""<Touchscreen>/Press"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": ""Touch"",
-                    ""action"": ""Fart"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
                 }
             ]
         },
@@ -148,7 +137,7 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": ""Click"",
-                    ""type"": ""PassThrough"",
+                    ""type"": ""Button"",
                     ""id"": ""9c56dded-3a7d-4a13-86c0-20732cac3c54"",
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",

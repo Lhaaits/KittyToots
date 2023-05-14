@@ -1,7 +1,7 @@
-using System;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.InputSystem;
+using Touch = UnityEngine.InputSystem.EnhancedTouch;
 using TMPro;
 
 namespace Code.Scripts
@@ -22,23 +22,24 @@ namespace Code.Scripts
         public float difficultyIncreaseFactor = 1.02f;
         
         [HideInInspector] public float despawnPosX;
-        private Camera _camera;
-
-        public bool IsGameOver { get; set; }
-
-        public bool IsPaused { get; set; } = true;
-        private string _instructionText = "";
         public InputActionAsset inputAsset;
 
-        private InputActionMap _inputActionMap;
-        private InputAction _fartAction;
+        public bool IsGameOver { get; set; }
+        public bool IsPaused { get; set; } = true;
 
-        private void OnEnable()
-        {
-            _inputActionMap = inputAsset.FindActionMap("Player");
-            _fartAction = _inputActionMap.FindAction("Fart");
-            _fartAction.Enable();
-        }
+        private Camera _camera;
+        private string _instructionText = "";
+
+        private InputActionMap _inputActionMap;
+        // private InputAction _fartAction;
+        //
+        // private void OnEnable()
+        // {
+        //     _inputActionMap = inputAsset.FindActionMap("Player");
+        //     _fartAction = _inputActionMap.FindAction("Fart");
+        //     _fartAction.Enable();
+        //     Touch.EnhancedTouchSupport.Enable();
+        // }
 
         private void Awake()
         {
@@ -61,7 +62,7 @@ namespace Code.Scripts
             _instructionText = startText.text;
             startText.text = "";
             Time.timeScale = 1;
-            _fartAction.Enable();
+            // _fartAction.Enable();
         }
 
         private void Update()
@@ -69,6 +70,7 @@ namespace Code.Scripts
             if (IsPaused && Time.timeSinceLevelLoad > 1f) // Wait a moment before pausing, for effect
             {
                 Time.timeScale = 0;
+                // flicker text
                 if (Time.realtimeSinceStartup * 3 % 2 < 1)
                 {
                     startText.text = _instructionText;
@@ -78,27 +80,30 @@ namespace Code.Scripts
                     startText.text = "";
                 }
             }
+        }
 
-            if (_fartAction.triggered)
+        public void HandleFart()
+        {
+            if (IsGameOver)
             {
-                if (!IsPaused) return;
-                Debug.Log("pressed fart to start");
-                startText.text = "";
-                IsPaused = false;
-                Time.timeScale = 1;
+                Restart();
+                return;
             }
+            if (!IsPaused) return;
+            Debug.Log("pressed fart to start");
+            startText.text = "";
+            IsPaused = false;
+            Time.timeScale = 1;
         }
 
         public void IncreaseScore()
         {
             score++;
             scoreText.text = score.ToString();
-            if (score % 5 == 0)
-            {
-                moveSpeed *= difficultyIncreaseFactor;
-                spawnInterval /=  difficultyIncreaseFactor;
-                maxHeightChange /= difficultyIncreaseFactor;
-            }
+            if (score % 5 != 0) return;
+            moveSpeed *= difficultyIncreaseFactor;
+            spawnInterval /=  difficultyIncreaseFactor;
+            maxHeightChange /= difficultyIncreaseFactor;
         }
 
         public void Restart()
@@ -117,30 +122,29 @@ namespace Code.Scripts
             gameOverScreen.SetActive(true);
             Time.timeScale = slowMotionFactor;
             inputAsset.FindActionMap("UI").Enable();
-            _fartAction.Disable();
+            // _fartAction.Disable();
         }
-        // TODO exit game menu
-
+        // TODO game menu
+        // TODO recognize phone orientation
         // TODO nice "new high score" animations
         private void UpdateHighScore()
         {
             var currentHighScore = PlayerPrefs.GetInt(Constants.HighScore.ToString());
-            if (score > currentHighScore)
-            {
-                newHighScoreText.text = "New high score! " + score;
-                highScoreText.text = score.ToString();
-                PlayerPrefs.SetInt(Constants.HighScore.ToString(), score);
-            }
+            if (score <= currentHighScore) return;
+            newHighScoreText.text = "New high score! " + score;
+            highScoreText.text = score.ToString();
+            PlayerPrefs.SetInt(Constants.HighScore.ToString(), score);
+        }
+
+        private void OnDisable()
+        {
+            // _fartAction.Disable();
+            Touch.EnhancedTouchSupport.Disable();
         }
 
         enum Constants
         {
             HighScore
-        }
-
-        private void OnDisable()
-        {
-            _fartAction.Disable();
         }
     }
 }
