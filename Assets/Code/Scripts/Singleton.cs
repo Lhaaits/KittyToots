@@ -1,5 +1,5 @@
-using System;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 namespace Code.Scripts
 {
@@ -13,11 +13,15 @@ namespace Code.Scripts
             {
                 // if (_instance == null)
                 // {
+                //     var activeScene = SceneManager.GetActiveScene();
+                //     SceneManager.SetActiveScene(SceneManager.GetSceneByName("Managers"));
                 //     GameObject obj = new GameObject();
                 //     obj.name = typeof(T).Name;
-                //     obj.hideFlags = HideFlags.HideAndDontSave;
-                //     _instance = obj.AddComponent<T>();
+                //     // obj.hideFlags = HideFlags.HideAndDontSave;
+                //     _instance = 
+                //     SceneManager.SetActiveScene(activeScene);
                 // }
+
                 return _instance;
             }
         }
@@ -41,7 +45,6 @@ namespace Code.Scripts
             {
                 Destroy(this);
             }
-            return;
         }
     }
 }

@@ -8,6 +8,7 @@ namespace Code.Scripts
 {
     public class LogicScript : MonoBehaviour
     {
+        private const string Highscore = "Hi: ";
         public int score;
         public TMP_Text scoreText;
         public GameObject highScoreScreen;
@@ -25,21 +26,12 @@ namespace Code.Scripts
         public InputActionAsset inputAsset;
 
         public bool IsGameOver { get; set; }
-        public bool IsPaused { get; set; } = true;
+        public bool IsPausedForEffect { get; set; } = true;
 
         private Camera _camera;
         private string _instructionText = "";
 
         private InputActionMap _inputActionMap;
-        // private InputAction _fartAction;
-        //
-        // private void OnEnable()
-        // {
-        //     _inputActionMap = inputAsset.FindActionMap("Player");
-        //     _fartAction = _inputActionMap.FindAction("Fart");
-        //     _fartAction.Enable();
-        //     Touch.EnhancedTouchSupport.Enable();
-        // }
 
         private void Awake()
         {
@@ -54,7 +46,7 @@ namespace Code.Scripts
             var currentHighScore = PlayerPrefs.GetInt(Constants.HighScore.ToString());
             if (currentHighScore > 0)
             {
-                highScoreText.text = currentHighScore.ToString();
+                highScoreText.text = Highscore + currentHighScore;
                 highScoreScreen.SetActive(true);
             }
 
@@ -62,24 +54,14 @@ namespace Code.Scripts
             _instructionText = startText.text;
             startText.text = "";
             Time.timeScale = 1;
-            // _fartAction.Enable();
         }
 
         private void Update()
         {
-            if (IsPaused && Time.timeSinceLevelLoad > 1f) // Wait a moment before pausing, for effect
-            {
-                Time.timeScale = 0;
-                // flicker text
-                if (Time.realtimeSinceStartup * 3 % 2 < 1)
-                {
-                    startText.text = _instructionText;
-                }
-                else
-                {
-                    startText.text = "";
-                }
-            }
+            if (!IsPausedForEffect || !(Time.timeSinceLevelLoad > 1f)) return;
+            Time.timeScale = 0;
+            // flicker text
+            startText.text = Time.realtimeSinceStartup * 3 % 2 < 1 ? _instructionText : "";
         }
 
         public void HandleFart()
@@ -89,10 +71,10 @@ namespace Code.Scripts
                 Restart();
                 return;
             }
-            if (!IsPaused) return;
+            if (!IsPausedForEffect) return;
             Debug.Log("pressed fart to start");
             startText.text = "";
-            IsPaused = false;
+            IsPausedForEffect = false;
             Time.timeScale = 1;
         }
 
@@ -109,7 +91,8 @@ namespace Code.Scripts
         public void Restart()
         {
             Debug.Log("restarting game");
-            SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+            SceneInstantiate.ReloadScene();
+            AudioManager.Instance.ChangeMusicPitch(1.0f);
             IsGameOver = false;
         }
 
@@ -121,10 +104,9 @@ namespace Code.Scripts
             Debug.Log("slow down time");
             gameOverScreen.SetActive(true);
             Time.timeScale = slowMotionFactor;
-            inputAsset.FindActionMap("UI").Enable();
-            // _fartAction.Disable();
+            // inputAsset.FindActionMap("UI").Enable();
+            AudioManager.Instance.ChangeMusicPitch();
         }
-        // TODO game menu
         // TODO recognize phone orientation
         // TODO nice "new high score" animations
         private void UpdateHighScore()
@@ -132,13 +114,12 @@ namespace Code.Scripts
             var currentHighScore = PlayerPrefs.GetInt(Constants.HighScore.ToString());
             if (score <= currentHighScore) return;
             newHighScoreText.text = "New high score! " + score;
-            highScoreText.text = score.ToString();
+            highScoreText.text = Highscore + score;
             PlayerPrefs.SetInt(Constants.HighScore.ToString(), score);
         }
 
         private void OnDisable()
         {
-            // _fartAction.Disable();
             Touch.EnhancedTouchSupport.Disable();
         }
 

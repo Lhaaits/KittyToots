@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.InputSystem.EnhancedTouch;
+using UnityEngine.UI;
+using Touch = UnityEngine.InputSystem.EnhancedTouch.Touch;
 using Random = UnityEngine.Random;
 
 namespace Code.Scripts
@@ -19,10 +21,6 @@ namespace Code.Scripts
          * 
     */
         public new Rigidbody2D rigidbody;
-        public AudioSource fartSound;
-        public AudioSource meowSound;
-        public AudioSource popSound;
-        public AudioClip[] meows;
 
         [Tooltip("How much up do you want?")] public float upFactor = 10;
 
@@ -31,22 +29,22 @@ namespace Code.Scripts
         private List<string> _balloonTags = new();
 
         public InputActionAsset inputAsset;
-        // private InputActionMap _inputActionMap;
-        // private InputAction _fartAction;
+        private InputActionMap _inputActionMap;
+        private InputAction _fartAction;
 
-
+        private AudioManager _audioManager;
         private void OnEnable()
         {
-            // _inputActionMap = inputAsset.FindActionMap("Player");
-            // _fartAction = _inputActionMap.FindAction("Fart");
-            // _fartAction.Enable();
+            _inputActionMap = inputAsset.FindActionMap("Player");
+            _fartAction = _inputActionMap.FindAction("Fart");
+            _fartAction.Enable();
             EnhancedTouchSupport.Enable();
         }
 
         private void OnDisable()
         {
             EnhancedTouchSupport.Disable();
-            // _fartAction.Disable();
+            _fartAction.Disable();
         }
 
         // Start is called before the first frame update
@@ -56,25 +54,23 @@ namespace Code.Scripts
             _logicScript.IsGameOver = false;
             _balloonTags.Clear();
             _balloonTags.AddRange(new List<string> { "Left", "Middle", "Right" });
+            _audioManager = AudioManager.Instance;
         }
 
-        // private void Update()
-        // {
-        //     if (_logicScript.IsGameOver || _logicScript.IsPaused) return;
-        //     if (!_fartAction.triggered && Touch.activeTouches.Count <= 0) return;
-        //     Debug.Log("fartaction triggered");
-        //     rigidbody.velocity = Vector2.up * upFactor;
-        //     fartSound.pitch = Random.Range(0.5f, 2f);
-        //     fartSound.PlayOneShot(fartSound.clip);
-        // }
+        private void Update()
+        {
+            if (_logicScript.IsGameOver || _logicScript.IsPausedForEffect) return;
+            if (!_fartAction.triggered && Touch.activeTouches.Count <= 0) return;
+            Debug.Log("fartaction triggered");
+            rigidbody.velocity = Vector2.up * upFactor;
+        }
 
         public void HandleFart()
         {
-            if (_logicScript.IsGameOver || _logicScript.IsPaused) return;
+            if (_logicScript.IsGameOver || _logicScript.IsPausedForEffect) return;
             Debug.Log("fartaction triggered");
             rigidbody.velocity = Vector2.up * upFactor;
-            fartSound.pitch = Random.Range(0.5f, 2f);
-            fartSound.PlayOneShot(fartSound.clip);
+            AudioManager.Instance.PlaySoundEffect(SoundEffect.Fart);
         }
 
         private void OnCollisionEnter2D(Collision2D col)
@@ -113,10 +109,7 @@ namespace Code.Scripts
             Debug.Log(balloonTag);
             Destroy(balloon);
 
-            meowSound.clip = meows[Random.Range(0, meows.Length)];
-            meowSound.pitch = Random.Range(0.5f, 1.2f);
-            popSound.PlayOneShot(popSound.clip);
-            meowSound.PlayDelayed(0.1f);
+            AudioManager.Instance.PlaySoundEffect(SoundEffect.Hit);
 
             _balloonCount--;
             _balloonTags.Remove(balloonTag);

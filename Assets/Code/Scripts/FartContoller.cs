@@ -32,7 +32,6 @@ public class FartContoller : MonoBehaviour
             return;
         }
 
-        Debug.Log("touch count " + Touch.activeTouches.Count + ", tapped " + _tapped);
         if (Touch.activeTouches.Count > 0 && !_tapped)
         {
             Debug.Log("fart");
