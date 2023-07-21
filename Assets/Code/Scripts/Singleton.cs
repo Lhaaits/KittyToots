@@ -11,17 +11,6 @@ namespace Code.Scripts
         {
             get
             {
-                // if (_instance == null)
-                // {
-                //     var activeScene = SceneManager.GetActiveScene();
-                //     SceneManager.SetActiveScene(SceneManager.GetSceneByName("Managers"));
-                //     GameObject obj = new GameObject();
-                //     obj.name = typeof(T).Name;
-                //     // obj.hideFlags = HideFlags.HideAndDontSave;
-                //     _instance = 
-                //     SceneManager.SetActiveScene(activeScene);
-                // }
-
                 return _instance;
             }
         }

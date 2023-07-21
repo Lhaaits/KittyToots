@@ -13,11 +13,8 @@ namespace Code.Scripts
     {
         /** TODO background parallax
      * start screen
-     * add sounds
-    * add music
      * add touch control
      * build for mobile
-    * use space in menu
          * 
     */
         public new Rigidbody2D rigidbody;
@@ -57,20 +54,12 @@ namespace Code.Scripts
             _audioManager = AudioManager.Instance;
         }
 
-        private void Update()
-        {
-            if (_logicScript.IsGameOver || _logicScript.IsPausedForEffect) return;
-            if (!_fartAction.triggered && Touch.activeTouches.Count <= 0) return;
-            Debug.Log("fartaction triggered");
-            rigidbody.velocity = Vector2.up * upFactor;
-        }
-
         public void HandleFart()
         {
             if (_logicScript.IsGameOver || _logicScript.IsPausedForEffect) return;
             Debug.Log("fartaction triggered");
             rigidbody.velocity = Vector2.up * upFactor;
-            AudioManager.Instance.PlaySoundEffect(SoundEffect.Fart);
+            _audioManager.PlaySoundEffect(SoundEffect.Fart);
         }
 
         private void OnCollisionEnter2D(Collision2D col)
@@ -109,7 +98,7 @@ namespace Code.Scripts
             Debug.Log(balloonTag);
             Destroy(balloon);
 
-            AudioManager.Instance.PlaySoundEffect(SoundEffect.Hit);
+            _audioManager.PlaySoundEffect(SoundEffect.Hit);
 
             _balloonCount--;
             _balloonTags.Remove(balloonTag);

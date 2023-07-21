@@ -21,9 +21,8 @@ namespace Code.Scripts
         public float spawnInterval = 3;
         public float maxHeightChange = 9.5f;
         public float difficultyIncreaseFactor = 1.02f;
-        
+
         [HideInInspector] public float despawnPosX;
-        public InputActionAsset inputAsset;
 
         public bool IsGameOver { get; set; }
         public bool IsPausedForEffect { get; set; } = true;
@@ -37,7 +36,7 @@ namespace Code.Scripts
         {
             _camera = Camera.main;
             if (_camera == null) return;
-            var screenToWorldPoint = _camera.ScreenToWorldPoint(new Vector3(0,0,_camera.nearClipPlane));
+            var screenToWorldPoint = _camera.ScreenToWorldPoint(new Vector3(0, 0, _camera.nearClipPlane));
             despawnPosX = screenToWorldPoint.x - 20;
         }
 
@@ -51,7 +50,11 @@ namespace Code.Scripts
             }
 
             Debug.Log("awakened, timeSinceStartup: " + Time.realtimeSinceStartup);
+#if UNITY_IOS || UNITY_ANDROID || UNITY_WP_8_1
+            _instructionText = "Touch screen to fart";
+#else
             _instructionText = startText.text;
+#endif
             startText.text = "";
             Time.timeScale = 1;
         }
@@ -71,6 +74,7 @@ namespace Code.Scripts
                 Restart();
                 return;
             }
+
             if (!IsPausedForEffect) return;
             Debug.Log("pressed fart to start");
             startText.text = "";
@@ -84,7 +88,7 @@ namespace Code.Scripts
             scoreText.text = score.ToString();
             if (score % 5 != 0) return;
             moveSpeed *= difficultyIncreaseFactor;
-            spawnInterval /=  difficultyIncreaseFactor;
+            spawnInterval /= difficultyIncreaseFactor;
             maxHeightChange /= difficultyIncreaseFactor;
         }
 
@@ -107,6 +111,7 @@ namespace Code.Scripts
             // inputAsset.FindActionMap("UI").Enable();
             AudioManager.Instance.ChangeMusicPitch();
         }
+
         // TODO recognize phone orientation
         // TODO nice "new high score" animations
         private void UpdateHighScore()
