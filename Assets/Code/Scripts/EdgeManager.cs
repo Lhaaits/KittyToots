@@ -17,8 +17,8 @@ public class EdgeManager : MonoBehaviour
             var edgeTransform = edge.transform;
             edgeTransform.position = edge.name switch
             {
-                "BottomEdge" => new Vector3(0, bottomLeft.y - 20),
-                "TopEdge" => new Vector3(0, topRight.y + 20),
+                "BottomEdge" => new Vector3(0, bottomLeft.y - 40),
+                "TopEdge" => new Vector3(0, topRight.y + 40),
                 _ => edgeTransform.position
             };
         }

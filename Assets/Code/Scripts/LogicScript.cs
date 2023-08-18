@@ -1,5 +1,4 @@
 using UnityEngine;
-using UnityEngine.SceneManagement;
 using UnityEngine.InputSystem;
 using Touch = UnityEngine.InputSystem.EnhancedTouch;
 using TMPro;
@@ -37,7 +36,7 @@ namespace Code.Scripts
             _camera = Camera.main;
             if (_camera == null) return;
             var screenToWorldPoint = _camera.ScreenToWorldPoint(new Vector3(0, 0, _camera.nearClipPlane));
-            despawnPosX = screenToWorldPoint.x - 20;
+            despawnPosX = screenToWorldPoint.x - 40;
         }
 
         private void Start()
