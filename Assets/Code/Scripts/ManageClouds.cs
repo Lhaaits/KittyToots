@@ -7,9 +7,8 @@ namespace Code.Scripts
         public GameObject cloud;
 
         private float _timer;
-        private float _lastYPosition = 0;
         private float _maxHeightOffset = 83;
-        public float spawnInterval = 0.5f;
+        public float spawnInterval = 0.8f;
 
         private LogicScript _logicScript;
 
@@ -41,7 +40,7 @@ namespace Code.Scripts
         private void SpawnClouds()
         {
             var positionX = transform.position.x;
-            for (float i = -positionX; i < positionX; i += 5)
+            for (float i = -positionX; i < positionX; i += 8)
             {
                 SpawnCloud(i);
             }
@@ -64,8 +63,6 @@ namespace Code.Scripts
             var positionZ = Random.Range(minZ, 48) * 4;
             var instantiatedCloud = Instantiate(cloud, new Vector3(xPos, newYPosition, positionZ), transform.rotation);
             instantiatedCloud.GetComponent<SpriteRenderer>().color = new Color(1f - (positionZ - minZ)/(255f*4f),1,1f);
-                // new Color(255 - (2 * positionZ), 255 - (2 * positionZ), 255);
-            _lastYPosition = newYPosition;
         }
     }
 }
