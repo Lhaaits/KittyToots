@@ -17,7 +17,7 @@ namespace Code.Scripts
         {
             var transformPosition = Vector3.left * _logicScript.moveSpeed * Time.deltaTime;
             transform.position += transformPosition;
-            if (transform.position.x < _logicScript.despawnPosX - 100)
+            if (transform.position.x < _logicScript.despawnPosX - 200)
             {
                 Destroy(gameObject);
             }

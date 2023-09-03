@@ -57,15 +57,14 @@ namespace Code.Scripts
             var position = transform.position;
             var lowestPoint = position.y - _maxHeightOffset;
             var highestPoint = position.y + _maxHeightOffset;
-            var maxUp = Mathf.Min(highestPoint - _lastYPosition, _logicScript.maxHeightChange);
-            var maxDown = Mathf.Max(lowestPoint - _lastYPosition, -_logicScript.maxHeightChange);
 
             var newYPosition = Random.Range(lowestPoint, highestPoint);
 
-            var positionZ = Random.Range(25, 50) * 2;
+            var minZ = 12;
+            var positionZ = Random.Range(minZ, 48) * 4;
             var instantiatedCloud = Instantiate(cloud, new Vector3(xPos, newYPosition, positionZ), transform.rotation);
-            instantiatedCloud.GetComponent<SpriteRenderer>().color =
-                new Color(255 - (2 * positionZ), 255 - (2 * positionZ), 255);
+            instantiatedCloud.GetComponent<SpriteRenderer>().color = new Color(1f - (positionZ - minZ)/(255f*4f),1,1f);
+                // new Color(255 - (2 * positionZ), 255 - (2 * positionZ), 255);
             _lastYPosition = newYPosition;
         }
     }
